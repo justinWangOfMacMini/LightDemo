@@ -146,20 +146,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             switchButton.setButtonStatus(Config.STATUS_OFF);
             switchButton.setImageResource(R.drawable.btn_ejkg_off);
-            mService.writeRXCharacteristic((Config.ej_UPaEoff + "\r\n").getBytes());
+            mService.writeRXCharacteristic((Config.ej_UPaEoff).getBytes());
 
         } else if (switchButton.getButtonStatus() == Config.STATUS_OFF) {
 
             switchButton.setButtonStatus(Config.STATUS_ON);
             switchButton.setImageResource(R.drawable.btn_ejkg_on);
-            mService.writeRXCharacteristic((Config.ej_UPaEon + "\r\n").getBytes());
+            mService.writeRXCharacteristic((Config.ej_UPaEon).getBytes());
 
         } else {
 
-            switchButton.setButtonStatus(Config.STATUS_NO);
-            switchButton.setImageResource(R.drawable.btn_ejkg);
-            switchButton.setClickable(false);
-            mService.writeRXCharacteristic((Config.ej_UPaEno + "\r\n").getBytes());
+//            switchButton.setButtonStatus(Config.STATUS_NO);
+//            switchButton.setImageResource(R.drawable.btn_ejkg);
+//            switchButton.setClickable(false);
+//            mService.writeRXCharacteristic((Config.ej_UPaEno + "\r\n").getBytes());
 
         }
 
@@ -187,6 +187,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 String lightStr;
                 int light = seekBar.getProgress() + minNum;
                 if (light < 10) {
+                    lightStr = "00" + light;
+                } else if (light < 100) {
                     lightStr = "0" + light;
                 } else {
                     lightStr = "" + light;
