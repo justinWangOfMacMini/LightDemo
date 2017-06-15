@@ -146,20 +146,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             switchButton.setButtonStatus(Config.STATUS_OFF);
             switchButton.setImageResource(R.drawable.btn_ejkg_off);
-            mService.writeRXCharacteristic((Config.ej_UPaEoff + "\r\n").getBytes());
+            mService.writeRXCharacteristic((Config.ej_UPaEoff).getBytes());
 
         } else if (switchButton.getButtonStatus() == Config.STATUS_OFF) {
 
             switchButton.setButtonStatus(Config.STATUS_ON);
             switchButton.setImageResource(R.drawable.btn_ejkg_on);
-            mService.writeRXCharacteristic((Config.ej_UPaEon + "\r\n").getBytes());
+            mService.writeRXCharacteristic((Config.ej_UPaEon).getBytes());
 
         } else {
 
-            switchButton.setButtonStatus(Config.STATUS_NO);
-            switchButton.setImageResource(R.drawable.btn_ejkg);
-            switchButton.setClickable(false);
-            mService.writeRXCharacteristic((Config.ej_UPaEno + "\r\n").getBytes());
+//            switchButton.setButtonStatus(Config.STATUS_NO);
+//            switchButton.setImageResource(R.drawable.btn_ejkg);
+//            switchButton.setClickable(false);
+//            mService.writeRXCharacteristic((Config.ej_UPaEno + "\r\n").getBytes());
 
         }
 
@@ -187,6 +187,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 String lightStr;
                 int light = seekBar.getProgress() + minNum;
                 if (light < 10) {
+                    lightStr = "00" + light;
+                } else if (light < 100) {
                     lightStr = "0" + light;
                 } else {
                     lightStr = "" + light;
@@ -221,12 +223,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         sbLight.setThumb(getResources().getDrawable(R.drawable.seekbar_thumb_red));
                         sbLight.setEnabled(true);
 
-//                        btnConnectDisconnect.setText("Disconnect");
-//                        edtMessage.setEnabled(true);
-//                        btnSend.setEnabled(true);
-//                        ((TextView) findViewById(R.id.deviceName)).setText(mDevice.getName()+ " - ready");
-//                        listAdapter.add("["+currentDateTimeString+"] Connected to: "+ mDevice.getName());
-//                        messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                         mState = UART_PROFILE_CONNECTED;
                     }
                 });
@@ -249,11 +245,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         sbLight.setThumb(getResources().getDrawable(R.drawable.seekbar_thumb_gray));
                         sbLight.setEnabled(false);
 
-//                        btnConnectDisconnect.setText("Connect");
-//                        edtMessage.setEnabled(false);
-//                        btnSend.setEnabled(false);
-//                        ((TextView) findViewById(R.id.deviceName)).setText("Not Connected");
-//                        listAdapter.add("["+currentDateTimeString+"] Disconnected to: "+ mDevice.getName());
                         mState = UART_PROFILE_DISCONNECTED;
 //                        mService.close();
                         //setUiState();
@@ -276,6 +267,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         try {
                             String text = new String(txValue, "UTF-8");
                             String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
+
+                            Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
 //                            listAdapter.add("["+currentDateTimeString+"] RX: "+text);
 //                            messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
 
