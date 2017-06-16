@@ -68,8 +68,8 @@
             android:focusable="true"
             android:maxHeight="2.0dip"
             android:minHeight="2.0dip"
-            android:max="20"
-            android:progress="20"
+            android:max="255"
+            android:progress="255"
             android:progressDrawable="@drawable/seekbar_gray"
             android:thumb="@drawable/seekbar_thumb_gray" />
 
